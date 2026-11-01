@@ -37,11 +37,12 @@
 | ファイル | 元 | 使っている所 |
 |---|---|---|
 | `images/hero.jpg` | Google マップ（ジムでの集合写真） | 最初の画面 |
-| `images/members.jpg` | Wix「FIRST STEPについて」 | About |
-| `images/sandbags.jpg` | Google マップ | コース：一般 |
+| `images/members.jpg` | Wix「FIRST STEPについて」 | コース：一般（大人が写っている写真・ハル 2026-11-02） |
+| `images/bbq.jpg` | Google マップ | About（家族との時間） |
+| （外した）sandbags.jpg | Google マップ | 子どもがサンドバッグを打つ写真。一般コースには大人の写真を（ハル 2026-11-02）で使わなくなったので、公開リポジトリから消した。元の写真は本体の `firststep-assets` にある |
 | `images/kids-mitt.jpg` | Wix「キッズスクール」 | コース：キッズスクール |
 | `images/trainer.jpg` | Wix「笹原伊史について」 | トレーナー紹介（白黒・下の黒い帯は切って表示） |
-| `images/bbq.jpg`・`kids-class.jpg`・`kids-headgear.jpg`・`award.jpg` | Google マップ | ジムのみんな |
+| `images/kids-class.jpg`・`kids-headgear.jpg`・`award.jpg` | Google マップ | ジムのみんな |
 | `images/kid-gloves.jpg` | Wix「FIRST STEPについて」 | ジムのみんな |
 
 ## 公開する前に（笹原さんに確かめる）
