@@ -1,14 +1,15 @@
 /* ファーストステップのホームページ（2026-11-02 作り直し）。
    方針: 写真が主役・白い地にたっぷりの余白・差し色は1色だけ。どこからでも「体験予約」に1タップで行ける。
-   色は :root を変えるだけで全体が変わる。差し色は白い文字が読める濃さ（白と7.7:1）。 */
+   色は :root を変えるだけで全体が変わる。差し色はロゴの赤（#fe0000）に近く、白い文字が読める濃さ（白と5.4:1・帯の地と5.0:1）。 */
 :root {
   --ink: #222222;
   --sub: #6b6b6b;        /* 補足の文字（白と5.3:1・薄い帯と4.9:1） */
   --bg: #ffffff;
-  --tint: #f5f6f8;       /* 交互の帯 */
+  --tint: #f6f5f3;       /* 交互の帯 */
   --line: #e3e5e8;
-  --accent: #2c4f9e;     /* 差し色（ボタン・英字の見出し） */
-  --dark: #1d2733;       /* 写真が無いときの最初の画面・下の帯 */
+  --accent: #d7000f;     /* 差し色（ボタン・英字の見出し）。ロゴの赤 #fe0000 は白い字が読めない（4.0:1）ので少し深く */
+  --accent-dark: #b0000c;
+  --dark: #141414;       /* 写真が読めないときの最初の画面・下の帯 */
   --script: "Caveat", "Segoe Script", cursive;
   --jp: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "YuGothic", Meiryo, sans-serif;
 }
@@ -29,10 +30,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .menu-btn { position: absolute; left: 14px; top: 22px; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer;
   display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 6px; }
 .menu-btn i { display: block; height: 1.5px; background: #fff; transition: transform .2s, opacity .2s; }
-.logo { display: inline-flex; flex-direction: column; align-items: center; text-decoration: none; color: #fff; line-height: 1; }
-.logo-main { font-weight: 800; font-size: 1.45rem; letter-spacing: .14em; font-family: "Helvetica Neue", Arial, var(--jp); }
-.logo-sub { margin-top: 8px; font-size: .62rem; letter-spacing: .5em; padding-left: .5em; }
-@media (min-width: 768px) { .hd { height: 120px; } .menu-btn { left: 32px; top: 38px; width: 52px; } .logo-main { font-size: 2rem; } }
+.logo { display: block; margin-top: 18px; }
+.logo img { width: 150px; height: auto; filter: drop-shadow(0 1px 8px rgba(0, 0, 0, .35)); }
+@media (min-width: 768px) { .hd { height: 120px; } .menu-btn { left: 32px; top: 38px; width: 52px; } .logo { margin-top: 36px; } .logo img { width: 210px; } }
 
 /* メニュー（白い全面の板） */
 .nav { position: fixed; inset: 0; z-index: 40; background: rgba(255, 255, 255, .98); display: flex; flex-direction: column;
@@ -53,11 +53,12 @@ body.nav-open .menu-btn i:nth-child(3) { transform: translateY(-9.5px) rotate(-4
 .hero::before { content: ""; position: absolute; inset: 0;
   background-image: radial-gradient(rgba(0, 0, 0, .32) 1px, transparent 1.3px);
   background-size: 4px 4px; }
-.hero::after { content: ""; position: absolute; inset: 0; background: rgba(10, 16, 24, .22); }
+.hero::after { content: ""; position: absolute; inset: 0; background: rgba(10, 10, 10, .34); }
 .hero-text { position: relative; z-index: 1; padding: 0 20px; margin-top: 40px; }
 .hero h1 { margin: 0; font-size: clamp(1.7rem, 7.4vw, 3rem); font-weight: 700; letter-spacing: .2em; line-height: 1.7;
   text-shadow: 0 2px 16px rgba(0, 0, 0, .25); }
 .hero .script { margin: 6px 0 0; color: #fff; font-size: clamp(1.9rem, 7vw, 2.8rem); }
+.hero .area { margin: 18px 0 0; font-size: .78rem; letter-spacing: .4em; padding-left: .4em; }
 .scroll { position: absolute; z-index: 1; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: .62rem; letter-spacing: .3em;
   padding-bottom: 46px; }
 .scroll::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 1px; height: 38px; background: rgba(255, 255, 255, .8); }
@@ -80,7 +81,7 @@ body.nav-open .menu-btn i:nth-child(3) { transform: translateY(-9.5px) rotate(-4
 .ph.wide { aspect-ratio: 16 / 9; }
 .ph.square { aspect-ratio: 4 / 3; }
 .ph.map { aspect-ratio: 16 / 9; margin-bottom: 32px; }
-.photo { width: 100%; object-fit: cover; }
+.photo { width: 100%; height: auto; object-fit: cover; }   /* height:auto で img の height 属性より aspect-ratio を効かせる */
 
 /* 目的 */
 .purpose { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: 40px; }
@@ -119,7 +120,7 @@ body.nav-open .menu-btn i:nth-child(3) { transform: translateY(-9.5px) rotate(-4
   background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; letter-spacing: .14em; border: 0; border-radius: 2px;
   font-family: inherit; font-size: 1rem; cursor: pointer; }
 .btn::after { content: ""; width: 18px; height: 1px; background: currentColor; }
-.btn:hover { background: #24437f; }
+.btn:hover { background: var(--accent-dark); }
 .btn.wide { width: 100%; margin-top: 24px; }
 .btn[disabled] { opacity: .6; cursor: wait; }
 .link-more { color: var(--ink); text-decoration: none; letter-spacing: .12em; border-bottom: 1px solid var(--ink); padding-bottom: 4px; }
@@ -149,7 +150,7 @@ body.nav-open .menu-btn i:nth-child(3) { transform: translateY(-9.5px) rotate(-4
   font-weight: 700; margin: 0; letter-spacing: .04em; background: #fff; }
 .slot small { font-weight: 400; color: var(--sub); font-size: .8rem; }
 .slot input { width: auto; margin: 0; padding: 0; accent-color: var(--accent); }   /* 下の input の width:100% を打ち消す */
-.slot:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: #f2f5fb; }
+.slot:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: #fff3f3; }
 .slot.full { opacity: .45; cursor: not-allowed; }
 label { display: block; font-weight: 700; margin: 18px 0 6px; font-size: .92rem; }
 label small { font-weight: 400; color: var(--sub); }
@@ -171,7 +172,9 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 
 /* ---------- 下の帯 ---------- */
 .ft { background: var(--dark); color: #d9dde3; text-align: center; padding: 64px 24px 140px; }
-.ft .logo { color: #fff; }
+.ft-logo img { width: 170px; height: auto; margin: 0 auto; }
+.ft-addr { margin: 20px 0 0; font-size: .85rem; line-height: 1.9; }
+.ft-addr a { color: #fff; }
 .ft-links { margin: 28px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; font-size: .88rem; }
 .ft-links a { color: #fff; text-decoration: none; }
 .copy { margin: 28px 0 0; font-size: .72rem; letter-spacing: .2em; opacity: .7; }
@@ -185,3 +188,47 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 .float-cta.hide { opacity: 0; transform: scale(.9); pointer-events: none; }
 @media (min-width: 768px) { .float-cta { width: 150px; height: 150px; right: 32px; bottom: 32px; font-size: 1.2rem; border-width: 5px; } .float-cta .small { font-size: .72rem; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .float-cta, .faq summary::after, .menu-btn i { transition: none; } }
+
+/* ---------- 写真が入ってからの部品（2026-11-02） ---------- */
+.about { display: grid; gap: 32px; align-items: center; }
+.about .photo { aspect-ratio: 1 / 1; }
+.wants { list-style: none; margin: 0 0 24px; padding: 0; }
+.wants li { padding: 12px 0 12px 22px; border-bottom: 1px solid var(--line); position: relative; font-weight: 700; letter-spacing: .08em; }
+.wants li:first-child { border-top: 1px solid var(--line); }
+.wants li::before { content: ""; position: absolute; left: 2px; top: 50%; width: 8px; height: 8px; margin-top: -4px; background: var(--accent); }
+.about .text { margin: 0; }
+@media (min-width: 768px) { .about { grid-template-columns: 1fr 1fr; gap: 56px; } .about .text { text-align: left; } }
+
+.programs { display: grid; gap: 40px; }
+.program { background: #fff; }
+.program .photo { aspect-ratio: 4 / 3; }
+.program-body { padding: 24px 22px 28px; }
+.program .tag { display: inline-block; margin: 0; padding: 2px 10px; border: 1px solid var(--accent); color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .1em; line-height: 1.8; }
+.program h3 { margin: 10px 0 8px; font-size: 1.35rem; letter-spacing: .14em; }
+.program-body > p { margin: 0 0 18px; }
+.meta { margin: 0; }
+.meta div { display: grid; grid-template-columns: 4.5em 1fr; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); font-size: .92rem; line-height: 1.8; }
+.meta dt { font-weight: 700; }
+.meta dd { margin: 0; }
+@media (min-width: 768px) { .programs { grid-template-columns: 1fr 1fr; gap: 32px; } }
+
+.trainer { display: grid; gap: 28px; align-items: start; }
+.trainer .photo { aspect-ratio: 618 / 500; object-position: top; filter: grayscale(1) contrast(1.05); }   /* 下の黒い帯は切る */
+.name { margin: 0 0 14px; font-size: 1.4rem; font-weight: 700; letter-spacing: .2em; }
+.name span { display: block; font-family: var(--script); color: var(--accent); font-size: 1.4rem; letter-spacing: .02em; font-weight: 600; }
+.career { list-style: none; margin: 0 0 22px; padding: 0; }
+.career li { padding: 8px 0; border-bottom: 1px solid var(--line); font-weight: 700; letter-spacing: .06em; font-size: .95rem; }
+.career li:first-child { border-top: 1px solid var(--line); }
+.trainer .text { margin: 0 0 14px; text-align: left; }
+@media (min-width: 768px) { .trainer { grid-template-columns: 5fr 7fr; gap: 56px; } }
+
+.tbl th small, .tbl td small { display: block; font-weight: 400; color: var(--sub); font-size: .8rem; letter-spacing: .02em; }
+
+.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.gallery .photo { aspect-ratio: 1 / 1; }
+.gallery .g-wide { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+@media (min-width: 768px) { .gallery { grid-template-columns: repeat(4, 1fr); gap: 12px; } .gallery .g-wide { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; height: 100%; } }
+
+.map { margin: 0 auto 32px; max-width: 960px; aspect-ratio: 16 / 9; background: #e8e8e6; }
+.map iframe { width: 100%; height: 100%; border: 0; display: block; }
+.info a { color: var(--ink); }
