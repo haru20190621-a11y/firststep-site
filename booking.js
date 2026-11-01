@@ -16,20 +16,29 @@
   var submit = form.querySelector("button[type=submit]");
 
   var url = (root.getAttribute("data-booking-url") || "").trim().replace(/\/+$/, "");
+  var phone = (root.getAttribute("data-phone") || "").trim();
+  var byPhone = phone ? "お電話（" + phone + "）" : "お電話";
   var m = url.match(/^(https?:\/\/[^\/?#]+)\/t\/([A-Za-z0-9_-]{8,40})$/);
 
   function show(el, on) { el.hidden = !on; }
 
+  var lead = root.querySelector(".head .lead");
+
   function giveUp(text, withLink) {
     show(loading, false);
     show(form, false);
+    if (lead) show(lead, false);                 // 「日時を選んで…」はフォームが無いときは出さない
     fallbackText.textContent = text;
-    if (withLink && m) { fallbackLink.href = url; show(fallbackLink, true); }
+    if (withLink && m) {
+      fallbackLink.href = url; fallbackLink.textContent = "予約ページを開く"; show(fallbackLink, true);
+    } else if (phone) {
+      fallbackLink.href = "tel:" + phone; fallbackLink.textContent = "電話する"; show(fallbackLink, true);
+    }
     show(fallback, true);
   }
 
   if (!m) {
-    giveUp("ただいま準備中です。体験のご予約はお電話でお願いします。", false);
+    giveUp("ネットでのご予約は準備中です。見学・体験のご予約は" + byPhone + "でお願いします。", false);
     return;
   }
   var base = m[1], key = m[2];
