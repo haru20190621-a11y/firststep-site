@@ -48,14 +48,20 @@ body.nav-open .menu-btn i:nth-child(2) { opacity: 0; }
 body.nav-open .menu-btn i:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
 
 /* ---------- 最初の画面（写真＋細かい点の網） ---------- */
-.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center;
+/* 写真は人が右寄り・顔は上寄り。スマホは顔を上に残して文字を下に、PCは文字を左に寄せて顔を避ける */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; justify-content: center;
   text-align: center; color: #fff; overflow: hidden;
-  background: var(--dark) url("images/hero.jpg") center / cover no-repeat; }
+  background: var(--dark) url("images/hero.jpg") 68% 18% / cover no-repeat; }
+@media (min-width: 768px) {
+  .hero { align-items: center; justify-content: flex-start; text-align: left; background-position: center 30%; }
+  .hero-text { padding-left: 8vw; margin-top: 0; }
+  .hero .area { padding-left: 0; }
+}
 .hero::before { content: ""; position: absolute; inset: 0;
   background-image: radial-gradient(rgba(0, 0, 0, .32) 1px, transparent 1.3px);
   background-size: 4px 4px; }
 .hero::after { content: ""; position: absolute; inset: 0; background: rgba(10, 10, 10, .34); }
-.hero-text { position: relative; z-index: 1; padding: 0 20px; margin-top: 40px; }
+.hero-text { position: relative; z-index: 1; padding: 0 20px; margin-bottom: 20vh; }
 .hero h1 { margin: 0; font-size: clamp(1.7rem, 7.4vw, 3rem); font-weight: 700; letter-spacing: .2em; line-height: 1.7;
   text-shadow: 0 2px 16px rgba(0, 0, 0, .25); }
 .hero .script { margin: 6px 0 0; color: #fff; font-size: clamp(1.9rem, 7vw, 2.8rem); }
@@ -193,7 +199,7 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 
 /* ---------- 写真が入ってからの部品（2026-11-02） ---------- */
 .about { display: grid; gap: 32px; align-items: center; }
-.about .photo { aspect-ratio: 4 / 3; }
+.about .photo { aspect-ratio: 3 / 2; }
 .wants { list-style: none; margin: 0 0 24px; padding: 0; }
 .wants li { padding: 12px 0 12px 22px; border-bottom: 1px solid var(--line); position: relative; font-weight: 700; letter-spacing: .08em; }
 .wants li:first-child { border-top: 1px solid var(--line); }
@@ -203,7 +209,8 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 
 .programs { display: grid; gap: 40px; }
 .program { background: #fff; }
-.program .photo { aspect-ratio: 4 / 3; object-position: center 40%; }   /* 集合写真の顔が切れないよう少し上寄り */
+.program .photo { aspect-ratio: 4 / 3; object-position: center 40%; }
+.program .photo.tall { aspect-ratio: 4 / 3; object-position: center 35%; }   /* 縦の写真は顔のある上寄りを見せる */
 .program-body { padding: 24px 22px 28px; }
 .program .tag { display: inline-block; margin: 0; padding: 2px 10px; border: 1px solid var(--accent); color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .1em; line-height: 1.8; }
 .program h3 { margin: 10px 0 8px; font-size: 1.35rem; letter-spacing: .14em; }
@@ -228,7 +235,8 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 
 .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .gallery .photo { aspect-ratio: 1 / 1; }
-@media (min-width: 768px) { .gallery { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
+.gallery .g-wide { grid-column: 1 / -1; aspect-ratio: 3 / 2; }   /* 横長の2枚は、スマホでは幅いっぱい・PCでは2枚並び */
+@media (min-width: 768px) { .gallery { grid-template-columns: repeat(4, 1fr); gap: 12px; } .gallery .g-wide { grid-column: span 2; } }
 
 .map { margin: 0 auto 32px; max-width: 960px; aspect-ratio: 16 / 9; background: #e8e8e6; }
 .map iframe { width: 100%; height: 100%; border: 0; display: block; }

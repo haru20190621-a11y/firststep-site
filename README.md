@@ -36,18 +36,30 @@
 
 | ファイル | 元 | 使っている所 |
 |---|---|---|
-| `images/hero.jpg` | Google マップ（ジムでの集合写真） | 最初の画面 |
-| `images/members.jpg` | Wix「FIRST STEPについて」 | コース：一般（大人が写っている写真・ハル 2026-11-02） |
-| `images/bbq.jpg` | Google マップ | About（家族との時間） |
+| `images/hero.jpg` | 笹原さんから ss_16（ミットを構えて笑顔の女性） | 最初の画面（参考サイトと同じ「人がはっきり写る1枚」） |
+| `images/group.jpg` | 笹原さんから ss_02（ジムでの大集合写真） | About |
+| `images/adult-mitt.jpg` | 笹原さんから ss_10（大人のミット打ち） | コース：一般 |
+| `images/kids-care.jpg` | 笹原さんから ss_13（ヘッドギアの紐を直してもらう子ども） | コース：キッズスクール |
+| `images/sparring.jpg` | 笹原さんから ss_03（イベントで子どもがリングに立ち、会員が見守る） | ジムのみんな（横長） |
+| `images/crowd.jpg` | 笹原さんから ss_14（みんなで見守る） | ジムのみんな（横長） |
+| `images/team.jpg` | 笹原さんから ss_01（リングの上の3人） | ジムのみんな |
+| `images/beach.jpg` | 笹原さんから ss_12（海辺の自撮り） | ジムのみんな |
+| （外した）members.jpg・kids-mitt.jpg・kids-class.jpg・kid-gloves.jpg・award.jpg | Wix・Google マップ | 笹原さんの写真に差し替えたので公開リポジトリから消した（元は本体の `firststep-assets`） |
+| `images/bbq.jpg` | Google マップ | ジムのみんな（横長） |
 | （外した）sandbags.jpg | Google マップ | 子どもがサンドバッグを打つ写真。一般コースには大人の写真を（ハル 2026-11-02）で使わなくなったので、公開リポジトリから消した。元の写真は本体の `firststep-assets` にある |
-| `images/kids-mitt.jpg` | Wix「キッズスクール」 | コース：キッズスクール |
 | `images/trainer.jpg` | Wix「笹原伊史について」 | トレーナー紹介（白黒・下の黒い帯は切って表示） |
-| `images/kids-class.jpg`・`kids-headgear.jpg`・`award.jpg` | Google マップ | ジムのみんな |
+| `images/kids-headgear.jpg` | Google マップ | ジムのみんな |
 | `images/kid-gloves.jpg` | Wix「FIRST STEPについて」 | ジムのみんな |
+
+## 笹原さんの写真16枚（2026-11-02・了承済み）
+
+本体の `firststep-assets` ブランチの `assets/firststep/from_sasahara/`（説明は `photos.md`）。**笹原さん本人が「使ってよい」と言った写真**（ハルが確認）。
+- 使った: ss_16（最初の画面）・ss_02（About）・ss_10（一般）・ss_13（キッズ）・ss_03・ss_14・ss_01・ss_12（ジムのみんな）
+- 使っていない: ss_05（賞状の名前が読める）・ss_06・ss_07（上半身裸＝清潔感と合わない）・ss_08（ユニバのロゴ）・ss_09（車いすの方＝ご本人の件なのでハルが載せると決めたら）・ss_04・ss_11・ss_15（似た写真があるので）
 
 ## 公開する前に（笹原さんに確かめる）
 
-- **写真を載せてよいか**。とくに子どもの顔が写っている写真（hero・sandbags・kids-mitt・kids-class・kids-headgear・bbq・kid-gloves）
+- ~~写真を載せてよいか~~ → 2026-11-02 に笹原さんの了承あり（Google マップの写真 bbq・kids-headgear も含めてよいか、念のため一言）
 - **トレーナー紹介の写真**は選手時代の試合の写真で、新聞や大会のカメラマンが撮ったものかもしれない（撮った人の許可が要る可能性）。だめなら別の写真に差し替える
 - 分からない4つ（体験の料金・持ち物・料金が税込かどうか・駐車場）は**ページに書いていない**（間違いを書かないため）。分かったら、体験の流れ・料金・よくある質問・アクセスに足す。いまは「よくある質問」で電話の問い合わせに案内している
 - 言い回しを整えた所：About の締めの文、コースの説明、トレーナーの想い（短くまとめた）、よくある質問の答え（Wix の文から作った）
