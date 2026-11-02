@@ -45,44 +45,61 @@
   var terms = root.querySelector("[data-terms]");
   if (terms) terms.href = base + "/terms";
 
+  // 日時は「日にち」と「時間」の2つの選ぶ欄（GymKeep は営業時間から30分ごと・1か月先まで出すので、並べると長くなる）。
+  // left は残りの人数。null は定員なし（2026-11-02〜）。0 の時間は出さない
+  var openSlot = function (s) { return s.left === null || s.left === undefined || s.left > 0; };
+  var daySel, timeSel;
+
+  function option(sel, value, text) {
+    var o = document.createElement("option");
+    o.value = value; o.textContent = text;
+    sel.appendChild(o);
+  }
+
+  function field(id, text, sel) {
+    var lab = document.createElement("label");
+    lab.htmlFor = id; lab.textContent = text;
+    sel.id = id;
+    slotsBox.appendChild(lab);
+    slotsBox.appendChild(sel);
+  }
+
   function renderSlots(days) {
     slotsBox.textContent = "";
+    daySel = document.createElement("select");
+    timeSel = document.createElement("select");
+    field("bDay", "日にち", daySel);
+    field("bTime", "時間", timeSel);
+    var byDate = {};
+    option(daySel, "", "選んでください");
     days.forEach(function (d) {
-      var fs = document.createElement("fieldset");
-      fs.className = "day";
-      var lg = document.createElement("legend");
-      lg.textContent = d.label;
-      fs.appendChild(lg);
-      var row = document.createElement("div");
-      row.className = "slots";
-      d.slots.forEach(function (s) {
-        var lab = document.createElement("label");
-        lab.className = "slot" + (s.left ? "" : " full");
-        var r = document.createElement("input");
-        r.type = "radio"; r.name = "slot"; r.value = d.date + "|" + s.time; r.disabled = !s.left; r.required = true;
-        var t = document.createElement("span");
-        t.textContent = s.time;
-        var left = document.createElement("small");
-        left.textContent = s.left ? "残り" + s.left : "満員";
-        lab.appendChild(r); lab.appendChild(t); lab.appendChild(left);
-        row.appendChild(lab);
-      });
-      fs.appendChild(row);
-      slotsBox.appendChild(fs);
+      var times = d.slots.filter(openSlot).map(function (s) { return s.time; });
+      if (!times.length) return;
+      byDate[d.date] = times;
+      option(daySel, d.date, d.label);
     });
+    function fillTimes() {
+      timeSel.textContent = "";
+      var times = byDate[daySel.value] || [];
+      option(timeSel, "", times.length ? "選んでください" : "先に日にちを選んでください");
+      times.forEach(function (t) { option(timeSel, t, t); });
+      timeSel.disabled = !times.length;
+    }
+    daySel.addEventListener("change", fillTimes);
+    fillTimes();
   }
 
   function load() {
     fetch(base + "/t/" + key + "/slots.json", { credentials: "omit", cache: "no-store" })
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (data.note) { note.textContent = data.note; show(note, true); }
-        var contact = data.contact ? "（" + data.contact + "）" : "";
+        if (data.note) { note.textContent = "持ち物：" + data.note; show(note, true); }
+        var contact = phone ? "（" + phone + "）" : "";
         if (!data.ok || !data.open) {
           giveUp("いまはネットでの体験予約を受け付けていません。お手数ですが、お電話でお問い合わせください" + contact + "。", false);
           return;
         }
-        var open = (data.days || []).filter(function (d) { return d.slots.some(function (s) { return s.left > 0; }); });
+        var open = (data.days || []).filter(function (d) { return d.slots.some(openSlot); });
         if (!open.length) {
           giveUp("いま予約できる日時がありません。お手数ですが、お電話でお問い合わせください" + contact + "。", false);
           return;
@@ -101,15 +118,14 @@
     e.preventDefault();
     show(errorBox, false);
     var fd = new FormData(form);
-    var slot = fd.get("slot") || "";
-    var problem = !slot ? "日時を選んでください"
+    var day = daySel ? daySel.value : "", time = timeSel ? timeSel.value : "";
+    var problem = !day ? "日にちを選んでください" : !time ? "時間を選んでください"
       : !String(fd.get("name") || "").trim() ? "お名前を入れてください"
       : !String(fd.get("phone") || "").trim() ? "電話番号を入れてください"
       : !fd.get("agree") ? "同意のチェックを入れてください" : "";
     if (problem) { errorBox.textContent = problem; show(errorBox, true); return; }
     var body = new URLSearchParams();
-    var parts = String(slot).split("|");
-    body.set("date", parts[0]); body.set("time", parts[1] || "");
+    body.set("date", day); body.set("time", time);
     ["name", "phone", "age", "sex", "note", "agree", "website"].forEach(function (k) { body.set(k, fd.get(k) || ""); });
     submit.disabled = true;
     fetch(base + "/t/" + key + "/book", {

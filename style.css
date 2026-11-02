@@ -144,6 +144,7 @@ body.nav-open .menu-btn i:nth-child(3) { transform: translateY(-9.5px) rotate(-4
 .notice { background: var(--tint); padding: 14px 16px; margin: 0 0 24px; white-space: pre-line; font-size: .92rem; }
 .step { margin: 28px 0 10px; font-weight: 700; letter-spacing: .1em; }
 .step:first-of-type { margin-top: 0; }
+[data-slots] label:first-child { margin-top: 0; }
 .day { border: 0; padding: 0; margin: 0 0 16px; }
 .day legend { font-weight: 700; padding: 0; margin: 0 0 8px; font-size: .95rem; }
 .slots { display: flex; flex-wrap: wrap; gap: 8px; }
