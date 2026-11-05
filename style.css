@@ -48,12 +48,12 @@ body.nav-open .menu-btn i:nth-child(2) { opacity: 0; }
 body.nav-open .menu-btn i:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
 
 /* ---------- 最初の画面（写真＋細かい点の網） ---------- */
-/* 写真は人が右寄り・顔は上寄り。スマホは顔を上に残して文字を下に、PCは文字を左に寄せて顔を避ける */
+/* 写真は会員みんなの集合写真（人は中央〜下寄り）。スマホは真ん中を見せて文字を下に、PCは文字を左に寄せる */
 .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; justify-content: center;
   text-align: center; color: #fff; overflow: hidden;
-  background: var(--dark) url("images/hero.jpg") 68% 18% / cover no-repeat; }
+  background: var(--dark) url("images/hero.jpg") 50% 50% / cover no-repeat; }
 @media (min-width: 768px) {
-  .hero { align-items: center; justify-content: flex-start; text-align: left; background-position: center 30%; }
+  .hero { align-items: center; justify-content: flex-start; text-align: left; background-position: center 65%; }
   .hero-text { padding-left: 8vw; margin-top: 0; }
   .hero .area { padding-left: 0; }
 }
