@@ -93,7 +93,10 @@
     fetch(base + "/t/" + key + "/slots.json", { credentials: "omit", cache: "no-store" })
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (data.note) { note.textContent = "持ち物：" + data.note; show(note, true); }
+        var lines = [];
+        if (data.fee) lines.push("体験の費用：" + data.fee);
+        if (data.note) lines.push("持ち物：" + data.note);
+        if (lines.length) { note.textContent = lines.join("\n"); show(note, true); }
         var contact = phone ? "（" + phone + "）" : "";
         if (!data.ok || !data.open) {
           giveUp("いまはネットでの体験予約を受け付けていません。お手数ですが、お電話でお問い合わせください" + contact + "。", false);
