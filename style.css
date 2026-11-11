@@ -220,6 +220,9 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 .meta dt { font-weight: 700; }
 .meta dd { margin: 0; }
 @media (min-width: 768px) { .programs { grid-template-columns: 1fr 1fr; gap: 32px; } }
+/* コースが3つ（一般・ボクササイズ・キッズ）。タブレットは2列で3つ目を真ん中に、PCは3列（2026-11-11） */
+@media (min-width: 768px) and (max-width: 1099px) { .programs > .program:nth-child(3):last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 16px); } }
+@media (min-width: 1100px) { .programs { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
 
 .trainer { display: grid; gap: 28px; align-items: start; }
 .trainer .photo { aspect-ratio: 618 / 500; object-position: top; filter: grayscale(1) contrast(1.05); }   /* 下の黒い帯は切る */
