@@ -221,8 +221,8 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 .meta dd { margin: 0; }
 @media (min-width: 768px) { .programs { grid-template-columns: 1fr 1fr; gap: 32px; } }
 /* コースが3つ（一般・ボクササイズ・キッズ）。タブレットは2列で3つ目を真ん中に、PCは3列（2026-11-11） */
-@media (min-width: 768px) and (max-width: 1099px) { .programs > .program:nth-child(3):last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 16px); } }
-@media (min-width: 1100px) { .programs { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+/* 並びは 一般・ボクササイズ → ボクササイズの日程（横いっぱい）→ キッズ（真ん中）。ゆかさんの指示（2026-11-11） */
+@media (min-width: 768px) { .programs > .bx-days { grid-column: 1 / -1; } .programs > .program:last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 16px); } }
 
 .trainer { display: grid; gap: 28px; align-items: start; }
 .trainer .photo { aspect-ratio: 618 / 500; object-position: top; filter: grayscale(1) contrast(1.05); }   /* 下の黒い帯は切る */
@@ -249,7 +249,7 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 a[href^="tel:"], .nowrap { white-space: nowrap; }
 
 /* ボクササイズの日程（月ごとに入れ替え・2026-11-11） */
-.bx-days { max-width: 960px; margin: 40px auto 0; background: #fff; padding: 24px 16px; }
+.bx-days { max-width: 960px; margin: 0 auto; width: 100%; box-sizing: border-box; background: #fff; padding: 24px 16px; }
 .bx-days h3 { margin: 0 0 14px; font-size: 1.15rem; letter-spacing: .1em; text-align: center; }
 .bx-days ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 16px; }
 .bx-days li { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .84rem; letter-spacing: 0; white-space: nowrap; }
