@@ -247,3 +247,14 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 
 /* 電話番号・郵便番号を途中で折り返さない（2026-11-11 笹原さん「電話番号が途中で隙間が空いている」） */
 a[href^="tel:"], .nowrap { white-space: nowrap; }
+
+/* ボクササイズの日程（月ごとに入れ替え・2026-11-11） */
+.bx-days { max-width: 960px; margin: 40px auto 0; background: #fff; padding: 24px 16px; }
+.bx-days h3 { margin: 0 0 14px; font-size: 1.15rem; letter-spacing: .1em; text-align: center; }
+.bx-days ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 16px; }
+.bx-days li { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .84rem; letter-spacing: 0; white-space: nowrap; }
+@media (min-width: 768px) { .bx-days li { font-size: .95rem; } }
+.bx-days li b { font-family: inherit; }
+.bx-days .note { margin: 14px 0 0; font-size: .82rem; color: var(--sub); text-align: center; }
+@media (min-width: 768px) { .bx-days ul { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 359px) { .bx-days ul { grid-template-columns: 1fr; } }
