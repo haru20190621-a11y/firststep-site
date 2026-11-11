@@ -28,7 +28,17 @@
     show(loading, false);
     show(form, false);
     if (lead) show(lead, false);                 // 「日時を選んで…」はフォームが無いときは出さない
-    fallbackText.textContent = text;
+    // 電話番号は途中で折り返さない（ひとまとまりの span に入れる）。文字は textContent で入れる
+    fallbackText.textContent = "";
+    var parts = phone ? text.split(phone) : [text];
+    parts.forEach(function (part, i) {
+      if (i > 0) {
+        var tel = document.createElement("span");
+        tel.className = "nowrap"; tel.textContent = phone;
+        fallbackText.appendChild(tel);
+      }
+      fallbackText.appendChild(document.createTextNode(part));
+    });
     if (withLink && m) {
       fallbackLink.href = url; fallbackLink.textContent = "予約ページを開く"; show(fallbackLink, true);
     } else if (phone) {
