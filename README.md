@@ -6,7 +6,7 @@
 
 > このリポジトリ（`firststep-site`）はホームページだけを置く公開リポジトリ。GymKeep 本体（`boxinglog-gym`）は非公開のまま。
 > 2026-11-02 に GymKeep 本体の `sites/firststep/` から移した。
-> **下書きの間は `index.html` に検索よけ（`<meta name="robots" content="noindex, nofollow">`）が入っている。公開するときに消す。**
+> **2026-11-19 に検索よけ（noindex）を外して検索に載る形で公開した**（ハル「公開して」・笹原さんが前の Wix を非公開にしたため）。`robots.txt` と `sitemap.xml`（https://firststep-sabae.com/ の1枚）を置いた。
 
 ## ファイル
 
