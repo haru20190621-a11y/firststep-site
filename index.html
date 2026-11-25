@@ -224,7 +224,7 @@
     <div class="head">
       <p class="script">Reservation</p>
       <h2>見学・体験の予約</h2>
-      <p class="lead">空いている日時を選んで、お名前と電話番号を入れてください。</p>
+      <p class="lead">空いている日時を選んで、お名前と連絡先を入れてください。</p>
     </div>
     <div class="booking">
       <div class="notice" data-note hidden></div>
@@ -241,6 +241,8 @@
         <input id="bName" name="name" required maxlength="40" autocomplete="name" placeholder="例：山田 太郎">
         <label for="bPhone">電話番号 <small>ジムから確認の連絡をすることがあります</small></label>
         <input id="bPhone" name="phone" type="tel" required maxlength="20" inputmode="tel" autocomplete="tel" placeholder="例：090-1234-5678">
+        <label for="bMail">メールアドレス <small>ジムから返事のメッセージが届いたときにお知らせします</small></label>
+        <input id="bMail" name="email" type="email" required maxlength="254" inputmode="email" autocomplete="email" placeholder="例：taro@example.com">
         <div class="row2">
           <div>
             <label for="bAge">年齢 <small>任意</small></label>
@@ -266,6 +268,11 @@
         <p class="script">Thank you.</p>
         <p class="done-title">予約を受け付けました</p>
         <p class="done-when" data-done-when></p>
+        <div class="done-chat" data-done-chat hidden>
+          <p>体験の前に聞いておきたいことは、ここからジムに直接送れます。返事が届いたら、メールでお知らせします。</p>
+          <a class="btn" data-done-chat-link href="#" target="_blank" rel="noopener">ジムとのメッセージを開く</a>
+          <p class="done-chat-hint">あとで開けるように、開いたページをブックマークしておいてください。</p>
+        </div>
         <p><b>当日は、ジムの受付にあるQRコードをスマホで読み、予約のときの電話番号を入れてください。</b>それで受付が済みます。</p>
         <p>ジムから確認の連絡をすることがあります。<br>日時の変更・キャンセルは、お電話でご連絡ください（<a href="tel:090-5689-2408">090-5689-2408</a>）。</p>
       </div>

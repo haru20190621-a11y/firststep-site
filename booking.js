@@ -3,6 +3,8 @@
    予約ページの URL（https://…/t/<予約用の番号>）を1つ入れるだけで動く。
    - 空き枠は GymKeep から読む（/t/<番号>/slots.json）。予約は /t/<番号>/book に送る（Cookie は送らない）
    - 予約はそのままオーナーの GymKeep の「体験予約」に入り、オーナーにメールが届く
+   - 予約のあと、GymKeep が返す「ジムとのメッセージ」のページ（chat_url・予約ごとの合言葉つき）への入口を出す。
+     メールアドレスは、ジムの返事が届いた知らせの宛先として GymKeep に渡す（2026-11-26）
    - 読み込めないとき・受付を止めているときは、GymKeep の予約ページへのリンクと案内を出す
    - 画面に入れる文字はすべて textContent で入れる（HTML として解釈しない） */
 (function () {
@@ -13,6 +15,7 @@
   var form = $("[data-form]"), slotsBox = $("[data-slots]"), loading = $("[data-loading]");
   var fallback = $("[data-fallback]"), fallbackText = $("[data-fallback-text]"), fallbackLink = $("[data-fallback-link]");
   var note = $("[data-note]"), errorBox = $("[data-error]"), done = $("[data-done]"), doneWhen = $("[data-done-when]");
+  var doneChat = $("[data-done-chat]"), doneChatLink = $("[data-done-chat-link]");
   var submit = form.querySelector("button[type=submit]");
 
   var url = (root.getAttribute("data-booking-url") || "").trim().replace(/\/+$/, "");
@@ -132,14 +135,18 @@
     show(errorBox, false);
     var fd = new FormData(form);
     var day = daySel ? daySel.value : "", time = timeSel ? timeSel.value : "";
+    var mail = String(fd.get("email") || "").trim();      // ジムから返事が届いた知らせの宛先（GymKeep は「来た」で消す）
     var problem = !day ? "日にちを選んでください" : !time ? "時間を選んでください"
       : !String(fd.get("name") || "").trim() ? "お名前を入れてください"
       : !String(fd.get("phone") || "").trim() ? "電話番号を入れてください"
+      : !mail ? "メールアドレスを入れてください"
+      : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail) ? "メールアドレスの形が違うようです。入れ直してください"
       : !fd.get("agree") ? "同意のチェックを入れてください" : "";
     if (problem) { errorBox.textContent = problem; show(errorBox, true); return; }
     var body = new URLSearchParams();
     body.set("date", day); body.set("time", time);
     ["name", "phone", "age", "sex", "note", "agree", "website"].forEach(function (k) { body.set(k, fd.get(k) || ""); });
+    body.set("email", mail);
     submit.disabled = true;
     fetch(base + "/t/" + key + "/book", {
       method: "POST", body: body, credentials: "omit", headers: { "Accept": "application/json" }
@@ -148,6 +155,9 @@
       .then(function (res) {
         if (res.j.ok) {
           doneWhen.textContent = res.j.label || "";
+          // ジムとのメッセージの入口（予約ごとの合言葉つきの URL）。http(s) のときだけリンクにする
+          var chat = String(res.j.chat_url || "");
+          if (doneChat && /^https?:\/\//.test(chat)) { doneChatLink.href = chat; show(doneChat, true); }
           show(form, false);
           show(done, true);
           done.scrollIntoView({ block: "center" });
