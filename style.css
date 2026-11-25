@@ -174,6 +174,17 @@ input, select, textarea { width: 100%; font: inherit; letter-spacing: .02em; pad
 .done { text-align: center; }
 .done-title { margin: 6px 0 0; font-size: 1.3rem; font-weight: 700; letter-spacing: .1em; }
 .done-when { margin: 10px 0 16px; font-size: 1.6rem; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+/* 予約の前：入れた内容の確認（電話番号は当日の受付で照らすので、大きく見せる） */
+.confirm-lead { margin: 0 0 16px; }
+.confirm-list { margin: 0; }
+.confirm-list div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.confirm-list div:first-child { border-top: 1px solid var(--line); }
+.confirm-list dt { font-weight: 700; font-size: .92rem; padding-top: 2px; }
+.confirm-list dd { margin: 0; overflow-wrap: anywhere; }
+.confirm-list small { display: block; margin-top: 4px; color: var(--sub); font-size: .82rem; }
+.confirm-phone { font-size: 1.35rem; letter-spacing: .06em; }
+.confirm-edit { display: block; margin: 16px auto 0; padding: 8px 4px; background: none; border: 0; border-bottom: 1px solid var(--ink);
+  color: var(--ink); font: inherit; letter-spacing: .1em; cursor: pointer; }
 /* 予約のあと：ジムとのメッセージの入口（GymKeep が予約ごとに出す URL。無いときは出さない） */
 .done-chat { background: var(--tint); padding: 20px 18px 16px; margin: 0 0 22px; }
 .done-chat p { margin: 0 0 14px; }

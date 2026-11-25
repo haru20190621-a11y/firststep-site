@@ -262,8 +262,20 @@
         <div class="hp" aria-hidden="true"><label>この欄は空のままにしてください<input name="website" tabindex="-1" autocomplete="off"></label></div>
         <label class="agree"><input type="checkbox" name="agree" value="1" required><span>入力した内容を FIRST STEP に伝えることに同意します（<a data-terms href="#" target="_blank" rel="noopener">取り扱い</a>）</span></label>
         <p class="error" data-error role="alert" hidden></p>
-        <button class="btn wide" type="submit">この内容で予約する</button>
+        <button class="btn wide" type="submit">内容を確認する</button>
       </form>
+      <div class="confirm" data-confirm hidden>
+        <p class="step">3. 内容の確認</p>
+        <p class="confirm-lead">まだ予約は済んでいません。内容を確かめて、下のボタンを押してください。</p>
+        <dl class="confirm-list">
+          <div><dt>日時</dt><dd data-confirm-when></dd></div>
+          <div><dt>お名前</dt><dd data-confirm-name></dd></div>
+          <div><dt>電話番号</dt><dd><b class="confirm-phone" data-confirm-phone></b><small>当日、ジムの受付でこの番号を入れます。</small></dd></div>
+          <div><dt>メール</dt><dd><span class="confirm-mail" data-confirm-email></span><small>ジムから返事が届いたときのお知らせ先です。</small></dd></div>
+        </dl>
+        <button class="btn wide" type="button" data-confirm-send>この内容で予約する</button>
+        <button class="confirm-edit" type="button" data-confirm-edit>入力を直す</button>
+      </div>
       <div class="done" data-done hidden>
         <p class="script">Thank you.</p>
         <p class="done-title">予約を受け付けました</p>

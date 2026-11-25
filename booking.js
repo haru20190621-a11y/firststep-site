@@ -16,7 +16,7 @@
   var fallback = $("[data-fallback]"), fallbackText = $("[data-fallback-text]"), fallbackLink = $("[data-fallback-link]");
   var note = $("[data-note]"), errorBox = $("[data-error]"), done = $("[data-done]"), doneWhen = $("[data-done-when]");
   var doneChat = $("[data-done-chat]"), doneChatLink = $("[data-done-chat-link]");
-  var submit = form.querySelector("button[type=submit]");
+  var confirmBox = $("[data-confirm]"), confirmSend = $("[data-confirm-send]"), confirmEdit = $("[data-confirm-edit]");
 
   var url = (root.getAttribute("data-booking-url") || "").trim().replace(/\/+$/, "");
   var phone = (root.getAttribute("data-phone") || "").trim();
@@ -147,9 +147,33 @@
     body.set("date", day); body.set("time", time);
     ["name", "phone", "age", "sex", "note", "agree", "website"].forEach(function (k) { body.set(k, fd.get(k) || ""); });
     body.set("email", mail);
-    submit.disabled = true;
+    // 送る前に、入れた内容を1回見てもらう（2026-11-26）。電話番号は当日の受付で照らすので、打ち間違いにここで気づけるように
+    pending = body;
+    setConfirm("when", daySel.options[daySel.selectedIndex].textContent + " " + time);
+    setConfirm("name", String(fd.get("name")).trim());
+    setConfirm("phone", String(fd.get("phone")).trim());
+    setConfirm("email", mail);
+    show(form, false);
+    show(confirmBox, true);
+    confirmBox.scrollIntoView({ block: "center" });
+  });
+
+  var pending = null;                            // 確認の画面で「予約する」を押したときに送る中身
+  function setConfirm(name, text) { confirmBox.querySelector('[data-confirm-' + name + ']').textContent = text; }
+
+  function backToForm(message) {                 // 直すとき・送れなかったときは、入れた内容を残したままフォームに戻す
+    show(confirmBox, false);
+    show(form, true);
+    if (message) { errorBox.textContent = message; show(errorBox, true); errorBox.scrollIntoView({ block: "center" }); }
+  }
+
+  confirmEdit.addEventListener("click", function () { backToForm(""); form.scrollIntoView({ block: "start" }); });
+
+  confirmSend.addEventListener("click", function () {
+    if (!pending) return;
+    confirmSend.disabled = true;
     fetch(base + "/t/" + key + "/book", {
-      method: "POST", body: body, credentials: "omit", headers: { "Accept": "application/json" }
+      method: "POST", body: pending, credentials: "omit", headers: { "Accept": "application/json" }
     })
       .then(function (r) { return r.json().then(function (j) { return { status: r.status, j: j }; }); })
       .then(function (res) {
@@ -158,20 +182,19 @@
           // ジムとのメッセージの入口（予約ごとの合言葉つきの URL）。http(s) のときだけリンクにする
           var chat = String(res.j.chat_url || "");
           if (doneChat && /^https?:\/\//.test(chat)) { doneChatLink.href = chat; show(doneChat, true); }
-          show(form, false);
+          pending = null;
+          show(confirmBox, false);
           show(done, true);
           done.scrollIntoView({ block: "center" });
           return;
         }
-        errorBox.textContent = res.j.error || "予約できませんでした。もう一度お試しください。";
-        show(errorBox, true);
+        backToForm(res.j.error || "予約できませんでした。もう一度お試しください。");
         if (res.status === 409) load();          // 満員になった枠を出し直す（入力した名前などはそのまま）
       })
       .catch(function () {
-        errorBox.textContent = "通信できませんでした。電波の良いところで、もう一度お試しください。";
-        show(errorBox, true);
+        backToForm("通信できませんでした。電波の良いところで、もう一度お試しください。");
       })
-      .then(function () { submit.disabled = false; });
+      .then(function () { confirmSend.disabled = false; });
   });
 
   // 浮いている丸い「体験予約」は、予約フォームが見えている間は隠す（ボタンが入力欄に重ならないように）
