@@ -4,6 +4,7 @@
    - 空き枠は GymKeep から読む（/t/<番号>/slots.json）。予約は /t/<番号>/book に送る（Cookie は送らない）
    - 予約はそのままオーナーの GymKeep の「体験予約」に入り、オーナーにメールが届く
    - 予約のあと、GymKeep が返す「ジムとのメッセージ」のページ（chat_url・予約ごとの合言葉つき）への入口を出す。
+     GymKeep は予約を受けた時点で、入れたメールアドレスに「受け付けました」を送る（返事の mailed が true のときだけ、画面で案内する）。
      メールアドレスは、ジムの返事が届いた知らせの宛先として GymKeep に渡す（2026-11-26）
    - 読み込めないとき・受付を止めているときは、GymKeep の予約ページへのリンクと案内を出す
    - 画面に入れる文字はすべて textContent で入れる（HTML として解釈しない） */
@@ -15,7 +16,7 @@
   var form = $("[data-form]"), slotsBox = $("[data-slots]"), loading = $("[data-loading]");
   var fallback = $("[data-fallback]"), fallbackText = $("[data-fallback-text]"), fallbackLink = $("[data-fallback-link]");
   var note = $("[data-note]"), errorBox = $("[data-error]"), done = $("[data-done]"), doneWhen = $("[data-done-when]");
-  var doneChat = $("[data-done-chat]"), doneChatLink = $("[data-done-chat-link]");
+  var doneChat = $("[data-done-chat]"), doneChatLink = $("[data-done-chat-link]"), doneMail = $("[data-done-mail]");
   var confirmBox = $("[data-confirm]"), confirmSend = $("[data-confirm-send]"), confirmEdit = $("[data-confirm-edit]");
 
   var url = (root.getAttribute("data-booking-url") || "").trim().replace(/\/+$/, "");
@@ -182,6 +183,8 @@
           // ジムとのメッセージの入口（予約ごとの合言葉つきの URL）。http(s) のときだけリンクにする
           var chat = String(res.j.chat_url || "");
           if (doneChat && /^https?:\/\//.test(chat)) { doneChatLink.href = chat; show(doneChat, true); }
+          // GymKeep が「受け付けました」のメールを送れたときだけ、その案内を出す（2026-11-26。送れなかったとき・古い返事では出さない）
+          if (doneMail) show(doneMail, res.j.mailed === true);
           pending = null;
           show(confirmBox, false);
           show(done, true);

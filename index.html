@@ -241,7 +241,7 @@
         <input id="bName" name="name" required maxlength="40" autocomplete="name" placeholder="例：山田 太郎">
         <label for="bPhone">電話番号 <small>ジムから確認の連絡をすることがあります</small></label>
         <input id="bPhone" name="phone" type="tel" required maxlength="20" inputmode="tel" autocomplete="tel" placeholder="例：090-1234-5678">
-        <label for="bMail">メールアドレス <small>ジムから返事のメッセージが届いたときにお知らせします</small></label>
+        <label for="bMail">メールアドレス <small>予約の確認と、ジムから返事が届いたときのお知らせをお送りします</small></label>
         <input id="bMail" name="email" type="email" required maxlength="254" inputmode="email" autocomplete="email" placeholder="例：taro@example.com">
         <div class="row2">
           <div>
@@ -271,7 +271,7 @@
           <div><dt>日時</dt><dd data-confirm-when></dd></div>
           <div><dt>お名前</dt><dd data-confirm-name></dd></div>
           <div><dt>電話番号</dt><dd><b class="confirm-phone" data-confirm-phone></b><small>当日、ジムの受付でこの番号を入れます。</small></dd></div>
-          <div><dt>メール</dt><dd><span class="confirm-mail" data-confirm-email></span><small>ジムから返事が届いたときのお知らせ先です。</small></dd></div>
+          <div><dt>メール</dt><dd><span class="confirm-mail" data-confirm-email></span><small>予約の確認と、ジムから返事が届いたときのお知らせ先です。</small></dd></div>
         </dl>
         <button class="btn wide" type="button" data-confirm-send>この内容で予約する</button>
         <button class="confirm-edit" type="button" data-confirm-edit>入力を直す</button>
@@ -280,6 +280,7 @@
         <p class="script">Thank you.</p>
         <p class="done-title">予約を受け付けました</p>
         <p class="done-when" data-done-when></p>
+        <p class="done-mail" data-done-mail hidden>ご入力のメールアドレスに、予約の内容をメールでもお送りしました。届いていないときは、迷惑メールのフォルダをご確認ください。</p>
         <div class="done-chat" data-done-chat hidden>
           <p>体験の前に聞いておきたいことは、ここからジムに直接送れます。返事が届いたら、メールでお知らせします。</p>
           <a class="btn" data-done-chat-link href="#" target="_blank" rel="noopener">ジムとのメッセージを開く</a>
